@@ -1,0 +1,27 @@
+# Sıfır bir linux makinem var, bu projeyi nasıl kurarım?
+# Önce kötü bir Dockerfile yazalım, sonra iyileştirelim.
+# .NET SDK
+# Multi-Stage
+
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+
+# APP KLASÖRÜNÜ ÇALIŞMA DİZİNİM YAP
+WORKDIR /app
+
+# TÜM PROJEYİ APP'E KOPYALA
+COPY . .
+
+# PROJENİN BAĞIMLILIKLARINI YÜKLE
+RUN dotnet restore "WebAPI/WebAPI.csproj"
+
+# PROJEYİ DERLE
+RUN dotnet build "WebAPI/WebAPI.csproj" -c Release -o /app/build
+
+# PROJEYİ PUBLİSH ET
+RUN dotnet publish "WebAPI/WebAPI.csproj" -c Release -o /app/publish
+
+WORKDIR /app/publish
+
+# RUN => Image oluşturulma esnasında çalıştırılacak komut
+# ENTRYPOINT => Image çalıştırıldığında çalıştırılacak komut
+ENTRYPOINT [ "dotnet", "WebAPI.dll" ]

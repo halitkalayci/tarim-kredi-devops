@@ -1,27 +1,26 @@
-# Sıfır bir linux makinem var, bu projeyi nasıl kurarım?
-# Önce kötü bir Dockerfile yazalım, sonra iyileştirelim.
-# .NET SDK
-# Multi-Stage
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
-FROM mcr.microsoft.com/dotnet/sdk:8.0
+WORKDIR /src
 
-# APP KLASÖRÜNÜ ÇALIŞMA DİZİNİM YAP
-WORKDIR /app
+COPY ["WebAPI/WebAPI.csproj", "WebAPI/"]
+COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
+COPY ["Persistence/Persistence.csproj", "Persistence/"]
+COPY ["Application/Application.csproj", "Application/"]
 
-# TÜM PROJEYİ APP'E KOPYALA
-COPY . .
-
-# PROJENİN BAĞIMLILIKLARINI YÜKLE
 RUN dotnet restore "WebAPI/WebAPI.csproj"
 
-# PROJEYİ DERLE
-RUN dotnet build "WebAPI/WebAPI.csproj" -c Release -o /app/build
+# Dockerdaki cache mant���ndan �t�r� var olan dosyalar kopyalanmaya
+# �al���lmayacak. Bu y�zden �nce restore i�lemi yap�l�yor.
+COPY . .
 
-# PROJEYİ PUBLİSH ET
-RUN dotnet publish "WebAPI/WebAPI.csproj" -c Release -o /app/publish
+WORKDIR /src/WebAPI
+RUN dotnet build "WebAPI.csproj" -c Release -o /app/build
+RUN dotnet publish "WebAPI.csproj" -c Release -o /app/publish --no-restore
 
-WORKDIR /app/publish
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
 
-# RUN => Image oluşturulma esnasında çalıştırılacak komut
-# ENTRYPOINT => Image çalıştırıldığında çalıştırılacak komut
+COPY --from=build /app/publish .
+
 ENTRYPOINT [ "dotnet", "WebAPI.dll" ]

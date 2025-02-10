@@ -2,7 +2,9 @@
 # Önce kötü bir Dockerfile yazalým, sonra iyileþtirelim.
 # .NET SDK
 # Multi-Stage
+# Single-Stage
 
+#Stage-1 -> Publish klasörünü  -> Stage 2 ->
 FROM mcr.microsoft.com/dotnet/sdk:8.0
 
 # APP KLASÖRÜNÜ ÇALIÞMA DÝZÝNÝM YAP
@@ -22,6 +24,7 @@ RUN dotnet publish "WebAPI/WebAPI.csproj" -c Release -o /app/publish
 
 WORKDIR /app/publish
 
-# RUN => Image oluþturulma esnasýnda çalýþtýrýlacak komut
 # ENTRYPOINT => Image çalýþtýrýldýðýnda çalýþtýrýlacak komut
 ENTRYPOINT [ "dotnet", "WebAPI.dll" ]
+
+
