@@ -71,6 +71,6 @@ WebApiConfiguration webApiConfiguration =
     ?? throw new InvalidOperationException($"\"{webApiConfigurationSection}\" section cannot found in configuration.");
 app.UseCors(opt => opt.WithOrigins(webApiConfiguration.AllowedOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials());
 
-app.UseResponseLocalization();
+//app.UseResponseLocalization();
 
 app.Run();
