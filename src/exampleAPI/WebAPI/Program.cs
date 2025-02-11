@@ -35,6 +35,9 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.AddEndpointsApiExplorer();
+string c = builder.Configuration.GetConnectionString("BaseDb");
+Console.WriteLine(c);
+
 builder.Services.AddCors(opt =>
     opt.AddDefaultPolicy(p =>
     {

@@ -9,6 +9,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "exampleAPI", "exampleAPI", "{F4CFDEC8-18F0-4A9C-A16B-3045B325FA69}"
 	ProjectSection(SolutionItems) = preProject
 		SingleStage.Dockerfile = SingleStage.Dockerfile
+		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "src\exampleAPI\Application\Application.csproj", "{98DB48DE-CBB4-4BA4-982A-8A564016BBA1}"
