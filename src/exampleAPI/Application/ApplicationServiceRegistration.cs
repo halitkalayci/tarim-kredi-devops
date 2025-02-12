@@ -16,6 +16,7 @@ using NArchitecture.Core.Localization.Resource.Yaml.DependencyInjection;
 using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.JWT;
+using Application.Services.Products;
 
 namespace Application;
 
@@ -53,6 +54,7 @@ public static class ApplicationServiceRegistration
         services.AddYamlResourceLocalization();
 
 
+        services.AddScoped<IProductService, ProductManager>();
         return services;
     }
 

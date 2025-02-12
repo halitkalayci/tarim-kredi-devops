@@ -51,14 +51,14 @@ builder.Services.AddSwaggerGen(opt =>
 WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI(opt =>
     {
         opt.DocExpansion(DocExpansion.None);
     });
-}
+//}
 
 if (app.Environment.IsProduction())
     app.ConfigureCustomExceptionMiddleware();

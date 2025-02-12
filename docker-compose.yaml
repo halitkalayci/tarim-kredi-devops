@@ -18,6 +18,7 @@ services:
            - postgres-data:/var/lib/postgresql/data
     webapi:
         image: example-api2
+        build: ./src/exampleAPI
         container_name: api
         restart: always
         depends_on:
