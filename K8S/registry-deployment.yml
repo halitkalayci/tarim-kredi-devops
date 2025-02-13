@@ -64,11 +64,10 @@ metadata:
 spec:
   selector:
     app: registry
-  type: NodePort
+  type: ClusterIP
   ports:
   - name: registry
     protocol: TCP
     port: 80
     targetPort: 5000
-    nodePort: 30001
 ---

@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dotnet-api-config
+  namespace: default
+data:
+  ConnectionStrings__BaseDb: "Host=postgres;Port=5432;Database=Example;Username=test;Password=test"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnet
+  template:
+    metadata:
+      labels:
+        app: dotnet
+    spec:
+      imagePullSecrets:
+        - name: my-registry-secret
+      containers:
+        - name: dotnet
+          image: registry2.halitkalayci.com/example-api2
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: dotnet-api-config
