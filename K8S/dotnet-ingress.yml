@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dotnet-ingress
+  namespace: default
+spec:
+  rules:
+  - host: ttkapi.halitkalayci.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dotnet
+            port:
+              number: 8080
+---

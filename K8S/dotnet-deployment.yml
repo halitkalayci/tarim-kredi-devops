@@ -4,7 +4,7 @@ metadata:
   name: dotnet-api-config
   namespace: default
 data:
-  ConnectionStrings__BaseDb: "Host=postgres;Port=5432;Database=Example;Username=test;Password=test"
+  ConnectionStrings__BaseDb: "Host=postgres.postgre-namespace.svc.cluster.local;Port=5432;Database=Example;Username=test;Password=test"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -31,3 +31,20 @@ spec:
           envFrom:
             - configMapRef:
                 name: dotnet-api-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet
+  namespace: default
+spec:
+  selector:
+    app: dotnet
+  type: NodePort
+  ports:
+  - name: dotnet
+    protocol: TCP
+    port: 8080
+    targetPort: 8080
+    nodePort: 32500
+---
