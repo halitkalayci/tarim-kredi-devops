@@ -3,6 +3,10 @@ kind: Ingress
 metadata:
   name: registry-ingress
   namespace: registry-namespace
+  annotations:
+    nginx.ingress.kubernetes.io/auth-type: "basic"
+    nginx.ingress.kubernetes.io/auth-secret: "registry-auth"
+    nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
 spec:
   rules:
   - host: registry2.halitkalayci.com
