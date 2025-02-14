@@ -1,0 +1,14 @@
+harborAdminPassword: "Passw0rd*"
+
+externalURL: https://harbor2.halitkalayci.com
+
+expose:
+  type: ingress
+  ingress: 
+    hosts:
+      core: harbor2.halitkalayci.com
+    annotations:
+      nginx.ingress.kubernetes.io/proxy-body-size: "0"
+    tls:
+      enabled: true
+      secretName: harbor-tls
