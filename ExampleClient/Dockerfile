@@ -12,3 +12,6 @@ RUN npm run build -- --configuration production
 
 FROM nginx:alpine AS production-stage
 
+COPY --from=build-stage /app/dist/example-client/browser  /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
